@@ -1,8 +1,10 @@
 (() => {
-  const prefix = '/costco-price-jp';
+  const routes = [['/costco-price-jp', 'https://costco.crawlsnek.com/'], ['/ptt-iphone-tracker', 'https://macshop.crawlsnek.com/']];
   const path = window.location.pathname;
-  if (path !== prefix && !path.startsWith(prefix + '/')) return;
-  const target = new URL('https://costco.crawlsnek.com/');
+  const route = routes.find(([p]) => path === p || path.startsWith(p + '/'));
+  if (!route) return;
+  const [prefix, origin] = route;
+  const target = new URL(origin);
   target.pathname = path.slice(prefix.length) || '/';
   target.search = window.location.search;
   target.hash = window.location.hash;
